@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private MyControl myControl;
+    private float movementInput;
     [SerializeField] private float speed = 4f;
 
     private void Awake()
@@ -29,9 +30,21 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        float movementInput = myControl.Player.Movement.ReadValue<float>();
+        movementInput = myControl.Player.Movement.ReadValue<float>();
         Vector3 currentPosition = transform.position;
         currentPosition.x += movementInput * speed * Time.deltaTime;
         transform.position = currentPosition;
+        FlipSprite();
+    }
+
+    private void FlipSprite()
+    {
+        if(movementInput == -1)
+        {
+            transform.localScale = new Vector2(-1, 1);
+        } else if(movementInput == 1)
+        {
+            transform.localScale = new Vector2(1, 1);
+        }
     }
 }
