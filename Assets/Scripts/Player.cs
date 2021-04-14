@@ -56,10 +56,8 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
-        {
-
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, jumpSpeed), ForceMode2D.Impulse);
-        }
+        if (!GetComponent<Collider2D>().IsTouchingLayers(LayerMask.GetMask("Ground"))) { return;  }
+        GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, jumpSpeed), ForceMode2D.Impulse);
     }
 
     private bool IsGrounded()
