@@ -6,8 +6,10 @@ public class Player : MonoBehaviour
 {
     private MyControl myControl;
     private float movementInput;
+    private float jumpInput;
 
     [SerializeField] private float speed = 5f;
+    [SerializeField] private float jumpSpeed = 5f;
 
     bool isAlive = true;
 
@@ -17,6 +19,7 @@ public class Player : MonoBehaviour
     {
         myControl = new MyControl();
         myAnimator = GetComponent<Animator>();
+        myControl.Player.Jump.performed += _ => Jump(); 
     }
 
     private void OnEnable()
@@ -49,6 +52,19 @@ public class Player : MonoBehaviour
 
         bool playerIsMoving = movementInput != 0;
         myAnimator.SetBool("Running", playerIsMoving);
+    }
+
+    private void Jump()
+    {
+        {
+
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, jumpSpeed), ForceMode2D.Impulse);
+        }
+    }
+
+    private bool IsGrounded()
+    {
+        return true;
     }
 
     private void FlipSprite()
